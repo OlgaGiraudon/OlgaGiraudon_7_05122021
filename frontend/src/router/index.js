@@ -10,10 +10,16 @@ const routes = [
     component: () => import('../components/Registration.vue')
   },
   {
+    path: '/allMessages',
+    name: 'messages',
+    component: () => import('../components/Message.vue')
+  },
+  {
     path: '/',
     name: 'login',
     component: () => import('../components/Login.vue')
   },
+  
   
 ]
 

@@ -23,7 +23,17 @@
 .login_div {
     width:40%;
     text-align: center;
+    
 }
+h3 {
+    font-size: 23px;
+    border: 1px solid #3e82aa;
+}
+label, input, button {
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
 </style>
  
 <script>

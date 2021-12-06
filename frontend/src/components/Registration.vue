@@ -1,5 +1,5 @@
 <template>
-    <div class="registration_div">
+    <div class="registration_div">    
         <form>
             <h3>Inscription</h3>
  
@@ -33,7 +33,9 @@
 .registration_div {
     width:40%;
     text-align: center;
+    
 }
+
 </style>
  
 <script>
