@@ -1,8 +1,8 @@
 const db = require("../db");
 
 exports.list = (req, res, next) => {
-    var sql = "SELECT * FROM comment where postId = ? ORDER BY date DESC";
-    db.query(sql, [req.body.postId], function (err, result) {
+    var sql = "SELECT * FROM comment where postId = ? ORDER BY date DESC";//descending date
+    db.query(sql, [req.body.postId], function (err, result) { 
         if(err) {
             res.status(500).json({ error: err });
             throw err;

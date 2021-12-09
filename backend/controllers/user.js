@@ -31,11 +31,11 @@ exports.signup = (req, res, next) => {
           .catch(error => res.status(500).json({ error: error })); 
         }
         else{
-          return res.status(400).json({ message: 'Votre mot de passe est trop court. Veuillez creer un mot de passe de plus de 8 caractères'});
+          return res.status(400).json({ error: 'Votre mot de passe est trop court. Veuillez creer un mot de passe de plus de 8 caractères'});
         }
       }
       else{
-        return res.status(400).json({ message: 'Le mot de passe est vide'});
+        return res.status(400).json({ error: 'Le mot de passe est vide'});
       }
 
     });

@@ -1,22 +1,12 @@
 <template>
 <div>
-    <div>
-        <p>1er message</p>
-        <p>Blabla</p>
-        <p>Commentaire 1</p>
-        <p>Commentaire 2</p>
-        <p>Like</p>
-    </div>
-    <div>
-        <p>2e message</p>
-        <p>Blabla</p>
-        <p>Commentaire 1</p>
-        <p>Commentaire 2</p>
-        <p>Like</p>
+    <div v-for="message in messages" :key="message.postId">
+        <p>{{message.content}}</p>
+        <p>{{ message.date | moment("from") }}</p>
+        <p>{{message.userId}}</p>
     </div>
 
 </div>
-    
 </template>
 
 
@@ -25,9 +15,30 @@
 </style>
  
 <script>
+
+    import http from "../api.js";
     export default {
+        name:"messageList",
         data() {
-            return {}
+            return {
+                messages: []
+            };
+        },
+    
+    created()
+    {
+        this.retrieveMessages();
+    },
+    methods: {
+        retrieveMessages() {
+            http.get('/post/list').then(response => {  
+                this.messages = response.data;
+            })
+            .catch(e => {  
+            console.log(e);  
+            });  
         }
     }
+    }
+
 </script>
