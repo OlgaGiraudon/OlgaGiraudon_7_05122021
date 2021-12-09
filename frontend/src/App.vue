@@ -2,15 +2,62 @@
   <div id="app">
     <div id= "header"><img :src="require('./assets/img/icon.png')" alt="" width="50px" />Groupomania - pour vous et avec vous</div>
     <div id= "mainDiv">
-          <div id="nav">
+          <div id="nav" v-if="userPseudo == ''">
                 <router-link to="/">Connexion</router-link> |
-                <router-link to="/register">Inscription</router-link>      
+                <router-link to="/register">Inscription</router-link>
           </div>
-            <router-view/>
+          <div id="nav" v-else>
+          Vous êtes connectés en tant que : {{ userPseudo}}
+          <p><button @click="disconnect">Se déconnecter</button></p>
+          </div>
+        <router-view/>
     </div>
     <div>footer</div>
   </div>
 </template>
+<script>
+  import http from "./api.js";
+  export default {
+    name:"app",
+    data() {
+      return { 
+        userPseudo : ''
+      }
+    },
+    methods: {
+      checkConnection() {
+        let userConnected = localStorage.getItem('user');
+        this.userPseudo = '';
+        if(userConnected) {
+          let user = JSON.parse(userConnected);
+           let formDatas = {"userId": user.userId, "pseudo": user.pseudo }
+
+                http.post('/auth/checkValidUser', JSON.stringify(formDatas))
+                .then(() => {
+                        this.userPseudo = user.pseudo
+                        }
+                )
+                .catch( () => {
+                  
+                    localStorage.removeItem('user');
+                    this.userPseudo = '';
+                     window.location.href="/";
+                    }
+                );
+        }
+      },
+      disconnect() {
+        localStorage.removeItem('user');
+        this.userPseudo = '';
+        window.location.href="/";
+      }
+    },
+    mounted: function() {
+      this.checkConnection();       
+    }
+  }
+
+</script>
 
 <style lang="scss">
 body{

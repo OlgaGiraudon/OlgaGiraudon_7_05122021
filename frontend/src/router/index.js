@@ -20,10 +20,10 @@ const routes = [
     component: () => import('../components/Login.vue')
   },
   
-  
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 

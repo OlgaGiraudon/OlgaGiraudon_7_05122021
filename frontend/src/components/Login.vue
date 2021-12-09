@@ -1,16 +1,23 @@
 <template>
     <div class="login_div">
-        <form>
+        <form v-on:submit.prevent="checkForm">
             <h3>Se connecter</h3>
+
+            <p v-if="errors.length">
+            <b>Merci de corriger les erreurs suivantes:</b>
+            <ul>
+            <li v-for="error in errors" :key="error">{{ error }}</li>
+            </ul>
+            </p>
  
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" class="form-control form-control-lg" />
+                <input type="text" class="form-control form-control-lg" v-model="email"  placeholder="Email" />
             </div>
  
             <div class="form-group">
                 <label>Mot de passe</label>
-                <input type="password" class="form-control form-control-lg" />
+                <input type="password" class="form-control form-control-lg" v-model="password" placeholder="Mot de passe" />
             </div>
  
             <button type="submit" class="btn btn-dark btn-lg btn-block">Connexion</button>
@@ -18,6 +25,62 @@
         </form>
     </div>
 </template>
+
+<script>
+    import http from "../api.js";
+
+    export default {
+        name: "login",
+        data() {
+            return {
+                email: '',
+                password:'',
+                errors: [],
+                success: '',
+            }
+        },
+        methods: {
+            checkForm: function (e) {
+                this.errors = [];                
+                if (!this.email) {
+                    this.errors.push('Email requis.');
+                }
+                if (!this.password) {
+                    this.errors.push("Mot de passe requis.");
+                }
+                if (!this.errors.length) {
+                    this.login();
+                    return true;
+                }
+
+                e.preventDefault();
+            },
+            login() {
+                this.success = '';
+                let formDatas = {"email": this.email, "password": this.password }
+
+                http.post('/auth/login', JSON.stringify(formDatas))
+                .then(response => {  
+                        this.success = response.data;
+                        localStorage.setItem('user', JSON.stringify( this.success));
+                        window.location.href="/allMessages";
+                })
+                .catch(e => { 
+                    if(e.response) {
+                        this.errors.push(e.response.data.error); 
+                    }
+                });
+
+            }
+        },
+        mounted: function() {
+            let userConnected = localStorage.getItem('user');
+            if(userConnected) {
+                window.location.href="/allMessages";
+            }
+        }
+    }
+</script>
 
 <style lang="scss">
 .login_div {
@@ -35,11 +98,3 @@ label, input, button {
 }
 
 </style>
- 
-<script>
-    export default {
-        data() {
-            return {}
-        }
-    }
-</script>

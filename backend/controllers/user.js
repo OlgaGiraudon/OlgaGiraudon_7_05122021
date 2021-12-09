@@ -60,6 +60,7 @@ exports.signup = (req, res, next) => {
               }
               res.status(200).json({
                 userId: resultUserExist[0].userId,
+                pseudo: resultUserExist[0].pseudo,
                 token: jwt.sign( //Token crypt
                   { userId: resultUserExist[0].userId },
                   SECRET_TOKEN,
@@ -70,5 +71,21 @@ exports.signup = (req, res, next) => {
             })
             .catch(error => res.status(500).json({ error }));
         }
+      })
+    };
+
+    exports.checkValidUser = (req, res, next) => {
+      var sql = 'SELECT * FROM user WHERE userId = ? AND pseudo = ?';
+      db.query(sql, [req.body.userId, req.body.pseudo], function (err, resultUserExist) {
+        if(err) {
+          res.status(500).json({ error: err });
+          throw err;
+        }
+        if(resultUserExist.length == 0) {
+          return res.status(401).json({ error: 'User non trouvé' })
+        }
+        else {
+          return res.status(200).json({message: "ok"});
+        }   
       })
     };

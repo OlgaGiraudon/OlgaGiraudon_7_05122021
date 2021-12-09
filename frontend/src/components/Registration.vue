@@ -1,6 +1,6 @@
 <template>
     <div class="registration_div">    
-        <form @submit="checkForm">
+        <form v-on:submit.prevent="checkForm">
             <h3>Inscription</h3>
             <p v-if="errors.length">
             <b>Merci de corriger les erreurs suivantes:</b>
@@ -63,12 +63,10 @@
         methods: {
             checkForm: function (e) {
                 this.errors = [];
-                console.log('test');
                 if (!this.pseudo) {
                     this.errors.push("Pseudo requis.");
                 }
                 if (!this.email) {
-                    console.log(this.email)
                     this.errors.push('Email requis.');
                 } else if (!this.validEmail(this.email)) {
                     this.errors.push('Email valide requis.');
@@ -102,6 +100,12 @@
                     }
                 });
 
+            }
+        },
+        mounted: function() {
+            let userConnected = localStorage.getItem('user');
+            if(userConnected) {
+                window.location.href="/allMessages";
             }
         }
 
