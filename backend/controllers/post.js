@@ -1,7 +1,7 @@
 const db = require("../db");
 
 exports.list = (req, res, next) => {
-    var sql = "SELECT * FROM post, user, likes WHERE post.userId = user.userId  ORDER BY date DESC";
+    var sql = "SELECT * FROM post, user WHERE post.userId = user.userId  ORDER BY date DESC";
     db.query(sql, function (err, result) {
         if(err) {
             res.status(500).json({ error: err });

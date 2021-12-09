@@ -21,7 +21,8 @@
     <div v-for="message in messages" :key="message.postId">
         <p>{{message.content}}</p>
         <p>Ecrit :{{ message.date | moment("from") }}</p>
-        <p>Par : {{message.pseudo}}</p>        
+        <p>Par : {{message.pseudo}}</p>
+        <p>Nb likes : </p>        
         <hr />
     </div>
 
@@ -45,7 +46,7 @@
                 content: '',
                 errors: [],
                 success: '',
-                userId: ''
+                userId: ''                
             };
         },
     methods: {
@@ -56,12 +57,13 @@
                     'Authorization': `bearer ${this.token}`
                 }
             }).then(response => {  
-                this.messages = response.data;
+                this.messages = response.data;                
             })
             .catch(e => {  
                 console.log(e);  
             });  
         },
+        
         checkForm: function (e) {
                 this.errors = [];                
                 if (!this.content) {
@@ -106,8 +108,7 @@
             let user = JSON.parse(userConnected);
             
             this.token = user.token;
-            this.userId = user.userId;
-            console.log(userConnected);
+            this.userId = user.userId;            
             
             this.retrieveMessages();
         }
