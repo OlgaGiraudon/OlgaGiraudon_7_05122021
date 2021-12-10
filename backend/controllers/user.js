@@ -10,8 +10,13 @@ exports.signup = (req, res, next) => {
     var sql = 'SELECT * FROM user WHERE email = ?';
     db.query(sql, [req.body.email], function (err, resultUserExist) {
       if(resultUserExist.length > 0) {
-        return res.status(401).json({ error: 'Utilisateur existe !' }); 
+        return res.status(401).json({ error: 'Email existe déjà !' }); 
       }
+      var sql = 'SELECT * FROM user WHERE pseudo = ?';
+      db.query(sql, [req.body.pseudo], function (err, resultUserExist) {
+        if(resultUserExist.length > 0) {
+          return res.status(401).json({ error: 'Pseudo existe déjà !' }); 
+        }
       let mdp = req.body.password;      
       if(mdp)
       {
@@ -19,8 +24,11 @@ exports.signup = (req, res, next) => {
         if(mdp.length > 8){
           bcrypt.hash(req.body.password, 10)//password crypt
           .then(hash => {
-            var sql = "INSERT INTO user (email, password, pseudo) VALUES (?, ?, ?)";
-            db.query(sql, [req.body.email, hash, req.body.pseudo], function (err, result) {
+            var sql = "INSERT INTO user (email, password, pseudo, imageUrl) VALUES (?, ?, ?, ?)";
+            if(req.file) {
+              imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+            }
+            db.query(sql, [req.body.email, hash, req.body.pseudo, imageUrl], function (err, result) {
               if(err) {
                 res.status(500).json({ error: err });
                 throw err;
@@ -37,7 +45,7 @@ exports.signup = (req, res, next) => {
       else{
         return res.status(400).json({ error: 'Le mot de passe est vide'});
       }
-
+    })
     });
 
     };
@@ -61,6 +69,7 @@ exports.signup = (req, res, next) => {
               res.status(200).json({
                 userId: resultUserExist[0].userId,
                 pseudo: resultUserExist[0].pseudo,
+                userImage: resultUserExist[0].imageUrl,
                 token: jwt.sign( //Token crypt
                   { userId: resultUserExist[0].userId },
                   SECRET_TOKEN,

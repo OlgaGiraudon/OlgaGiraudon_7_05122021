@@ -19,6 +19,10 @@
                 <label>Email</label>
                 <input type="text" class="form-control form-control-lg"  v-model="email"  placeholder="Email" />
             </div>
+            <div class="form-group">
+                <label>Avatar</label>
+                <input type="file" name="imagePost" @change="handleFileUpload( $event )" ref="inputImage" accept="image/x-png,image/gif,image/jpeg" />
+            </div>
 
  
             <div class="form-group">
@@ -57,6 +61,7 @@
                 password:'',
                 errors: [],
                 success: '',
+                file: ''
             }
         },
 
@@ -85,14 +90,26 @@
                 var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(email);
             },
+            handleFileUpload( event ){
+                this.file = event.target.files[0];
+            },
 
             register() {
                 this.success = '';
-                let formDatas = {"pseudo":this.pseudo, "email": this.email, "password": this.password }
 
-                http.post('/auth/signup', JSON.stringify(formDatas))
+                const formData = new FormData();
+                if(this.file) {
+                    formData.append('imagePost', this.file, this.file.filename);
+                }
+                formData.append('pseudo', this.pseudo);
+                formData.append('email', this.email);
+                formData.append('password', this.password);
+
+                http.post('/auth/signup', formData)
                     .then(response => {  
                         this.success = response.data.message;
+                        this.$refs.inputImage.value=null;
+                        this.file = '';
                 })
                 .catch(e => { 
                     if(e.response) {

@@ -106,7 +106,7 @@
                  this.success = response.data.message;
                  this.file = '';
                  this.content = '';
-                 this.$refs.inputImage.value=null
+                 this.$refs.inputImage.value=null;
                  this.retrieveMessages();
 
             })

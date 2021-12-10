@@ -8,7 +8,7 @@
                 <router-link to="/register">Inscription</router-link>
           </div>
           <div id="nav" v-else>
-          Vous êtes connectés en tant que : {{ userPseudo}}
+          <span v-if="userImage"><img :src="userImage" width="30px"/></span>Vous êtes connectés en tant que : {{ userPseudo}}
           <p><button @click="disconnect">Se déconnecter</button></p>
           </div>
         <router-view/>
@@ -22,7 +22,8 @@
     name:"app",
     data() {
       return { 
-        userPseudo : ''
+        userPseudo : '',
+        userImage: '',
       }
     },
     methods: {
@@ -35,7 +36,8 @@
 
                 http.post('/auth/checkValidUser', JSON.stringify(formDatas))
                 .then(() => {
-                        this.userPseudo = user.pseudo
+                        this.userPseudo = user.pseudo;
+                        this.userImage = user.userImage
                         }
                 )
                 .catch( () => {
