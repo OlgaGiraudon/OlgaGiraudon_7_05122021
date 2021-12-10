@@ -2,6 +2,7 @@ const db = require("../db");
 
 exports.nbLikePost = (req, res, next) => {
     var sql = "SELECT COUNT(*) AS nbLikes FROM likes where postId = ?";
+    
     db.query(sql, [req.query.postId], function (err, result) {
         if(err) {
             res.status(500).json({ error: err });

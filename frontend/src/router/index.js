@@ -12,7 +12,7 @@ const routes = [
   {
     path: '/allMessages',
     name: 'messages',
-    component: () => import('../components/Message.vue')
+    component: () => import('../components/MessageList.vue')
   },
   {
     path: '/',
