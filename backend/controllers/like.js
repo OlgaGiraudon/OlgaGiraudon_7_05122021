@@ -38,15 +38,17 @@ exports.remove = (req, res, next) => {
 
 exports.checkAlreadyLike = (req, res, next) => {
     var sql = "SELECT * FROM likes where postId = ? AND userId = ?";
-    db.query(sql, [req.body.postId, req.body.userId], function (err, result) {
+    
+    db.query(sql, [req.query.postId, req.query.userId], function (err, result) {
         if(err) {
             res.status(500).json({ error: err });
             throw err;
         }
         if(result.length > 0)
         {
-            return res.status(200).json({ message: 'already like !' });
+            return res.status(200).json({ message: 'already' });
         }
+        return res.status(200).json({ message: 'none' });
     });
 
 }

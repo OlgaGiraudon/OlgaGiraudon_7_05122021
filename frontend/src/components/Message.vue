@@ -5,8 +5,8 @@
         <p>Ecrit :{{ message.date | moment("from") }}</p>
         <p>Par : {{message.pseudo}}</p>
         <p>Nb likes : {{nbLikes}} </p>
-        <button>Ajouter like</button>
-        <button>Retirer like</button>
+        <button v-if="statutLike == 0" @click="addLike">Ajouter like</button>
+        <button  v-else  @click="removeLike">Retirer like</button>
     </div>
 </template>
 
@@ -18,7 +18,9 @@
             return {
                 messageDetail: this.message,
                 token: '',
-                nbLikes:0
+                userId: '',
+                nbLikes:0,
+                statutLike: 0
             }
         },
         props: ['message'],
@@ -37,6 +39,55 @@
                     console.log(e);
                 });
             },
+            async alreadyLike() {
+                http.get('/like/checkAlreadyLike',
+                    {
+                        params:  {"postId": this.messageDetail.postId, "userId": this.userId },
+                        headers: {
+                            'Authorization': `bearer ${this.token}`
+                        }
+                }).then(response => {
+                    if(response.data) {
+                        if(response.data.message == 'already') {
+                             this.statutLike = 1;
+                        }
+                    }
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+            },
+            async addLike() {
+                let formDatas = {"postId":this.messageDetail.postId, "userId": this.userId }
+                http.post('/like/add', formDatas,
+                    {
+                        headers: {
+                            'Authorization': `bearer ${this.token}`
+                        }
+                }).then(() => {
+                    this.statutLike = 1;
+                    this.retrieveLikes();
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+            },
+            async removeLike() {
+                let formDatas = {"postId":this.messageDetail.postId, "userId": this.userId }
+                http.post('/like/remove', formDatas,
+                    {
+                        headers: {
+                            'Authorization': `bearer ${this.token}`
+                        }
+                }).then(() => {
+                    this.statutLike = 0;
+                    this.retrieveLikes();
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+            },
+
         },
         mounted: function() {
             let userConnected = localStorage.getItem('user');
@@ -48,6 +99,7 @@
             this.token = user.token;
             this.userId = user.userId;
             this.retrieveLikes();
+            this.alreadyLike();
         }
     }
 </script>
