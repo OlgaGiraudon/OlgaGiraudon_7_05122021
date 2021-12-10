@@ -13,7 +13,7 @@
         <div class="form-group">
             <label>Contenu</label>
             <textarea name="content" class="form-control form-control-lg"  v-model="content" placeholder="Contenu"></textarea>
-            <input type="file" name="imagePost" @change="handleFileUpload( $event )" ref="inputImage" />
+            <input type="file" name="imagePost" @change="handleFileUpload( $event )" ref="inputImage" accept="image/x-png,image/gif,image/jpeg" />
         </div>
             <button type="submit" class="btn btn-dark btn-lg btn-block">Ajouter</button>
     </form>
