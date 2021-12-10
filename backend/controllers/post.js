@@ -14,6 +14,8 @@ exports.list = (req, res, next) => {
 
 exports.create = (req, res, next) => {
     var sql = "INSERT INTO post (content, date, userId) VALUES (?, NOW(), ?)";
+
+    //let imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
     db.query(sql, [req.body.content, req.body.userId], function (err, result) {
         if(err) {
             res.status(500).json({ error: err });            

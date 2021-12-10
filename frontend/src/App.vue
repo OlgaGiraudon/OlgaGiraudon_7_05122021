@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <div id= "header"><img :src="require('./assets/img/icon.png')" alt="" width="50px" />Groupomania - pour vous et avec vous</div>
+    <div id= "header"><img :src="require('./logo/icon.png')" alt="logo_Groupomania"/></div>
+    <p>Pour vous et avec vous</p>
     <div id= "mainDiv">
           <div id="nav" v-if="userPseudo == ''">
                 <router-link to="/">Connexion</router-link> |
@@ -88,8 +89,13 @@ body{
   border: 3px solid rgb(14, 104, 146);
   width: 100%;
   height: 65px;
-  font-size: 25px;
 }
+#header img{
+  
+  height:130px;
+  margin-top:-30px;
+}
+
 #mainDiv {
 
   border: 3px solid rgb(14, 104, 146);
