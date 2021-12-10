@@ -24,7 +24,7 @@ exports.signup = (req, res, next) => {
         if(mdp.length > 8){
           bcrypt.hash(req.body.password, 10)//password crypt
           .then(hash => {
-            var sql = "INSERT INTO user (email, password, pseudo, imageUrl) VALUES (?, ?, ?, ?)";
+            var sql = "INSERT INTO user (email, password, pseudo, userImageUrl) VALUES (?, ?, ?, ?)";
             if(req.file) {
               imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
             }
@@ -69,7 +69,7 @@ exports.signup = (req, res, next) => {
               res.status(200).json({
                 userId: resultUserExist[0].userId,
                 pseudo: resultUserExist[0].pseudo,
-                userImage: resultUserExist[0].imageUrl,
+                userImage: resultUserExist[0].userImageUrl,
                 token: jwt.sign( //Token crypt
                   { userId: resultUserExist[0].userId },
                   SECRET_TOKEN,

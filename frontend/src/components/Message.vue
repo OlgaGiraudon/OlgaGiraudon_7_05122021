@@ -3,7 +3,7 @@
         <p>{{message.content}}</p>
         <p v-if="message.imageUrl"><img :src="message.imageUrl" width="100px"/></p>
         <p>Ecrit :{{ message.date | moment("from") }}</p>
-        <p>Par : {{message.pseudo}}</p>
+        <p>Par : <span v-if="message.userImageUrl"><img :src="message.userImageUrl" width="30px"/></span> {{message.pseudo}}</p>
         <p>Nb likes : {{nbLikes}} </p>
         <button v-if="statutLike == 0" @click="addLike">Ajouter like</button>
         <button  v-else  @click="removeLike">Retirer like</button>
