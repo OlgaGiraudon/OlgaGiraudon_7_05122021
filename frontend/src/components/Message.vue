@@ -2,7 +2,7 @@
 <div>
     <div>
     <p>Ajouter un post</p>
-    <form v-on:submit.prevent="checkForm">
+    <form v-on:submit.prevent="checkForm" enctype="multipart/form-data">
     <p v-if="errors.length">
             <b>Merci de corriger les erreurs suivantes:</b>
             <ul>
@@ -12,7 +12,8 @@
             <p v-if="success !== ''">{{ success}}</p>
         <div class="form-group">
             <label>Contenu</label>
-            <textarea name="content" class="form-control form-control-lg"  v-model="content" placeholder="Contenu"></textarea>            
+            <textarea name="content" class="form-control form-control-lg"  v-model="content" placeholder="Contenu"></textarea>
+            <input type="file" name="imagePost" @change="handleFileUpload( $event )" ref="inputImage" />
         </div>
             <button type="submit" class="btn btn-dark btn-lg btn-block">Ajouter</button>
     </form>
@@ -20,6 +21,7 @@
     
     <div v-for="message in messages" :key="message.postId">
         <p>{{message.content}}</p>
+        <p v-if="message.imageUrl"><img :src="message.imageUrl" width="100px"/></p>
         <p>Ecrit :{{ message.date | moment("from") }}</p>
         <p>Par : {{message.pseudo}}</p>
         <p>Nb likes : </p>        
@@ -46,7 +48,8 @@
                 content: '',
                 errors: [],
                 success: '',
-                userId: ''                
+                userId: '',
+                file: ''                
             };
         },
     methods: {
@@ -57,14 +60,18 @@
                     'Authorization': `bearer ${this.token}`
                 }
             }).then(response => {  
-                this.messages = response.data;                
+                this.messages = response.data;
             })
             .catch(e => {  
                 console.log(e);  
             });  
         },
+        handleFileUpload( event ){
+            this.file = event.target.files[0];
+        },
         
         checkForm: function (e) {
+                this.success = '';
                 this.errors = [];                
                 if (!this.content) {
                     this.errors.push('Contenu requis.');
@@ -80,9 +87,15 @@
         async addMessage() {
             this.success = '';
             this.errors = '';
-            let formDatas = {"content": this.content, "userId": this.userId }
 
-            http.post('/post/create', JSON.stringify(formDatas),
+            const formData = new FormData();
+            if(this.file) {
+                formData.append('imagePost', this.file, this.file.filename);
+            }
+            formData.append('content', this.content);
+            formData.append('userId', this.userId);
+
+            http.post('/post/create', formData,
                 {
                 headers: {
                     'Authorization': `bearer ${this.token}`
@@ -90,12 +103,15 @@
                 })
             .then(response => {
                  this.success = response.data.message;
+                 this.file = '';
+                 this.content = '';
+                 this.$refs.inputImage.value=null
                  this.retrieveMessages();
-                    
+
             })
-            .catch(e => { 
-                if(e.response) {                    
-                    this.errors.push(e.response.data.error); 
+            .catch(e => {
+                if(e.response) {
+                    this.errors.push(e.response.data.error);
                 }
             });
         }
@@ -106,10 +122,10 @@
                 window.location.href="/";
             }
             let user = JSON.parse(userConnected);
-            
+
             this.token = user.token;
-            this.userId = user.userId;            
-            
+            this.userId = user.userId;
+
             this.retrieveMessages();
         }
     }
