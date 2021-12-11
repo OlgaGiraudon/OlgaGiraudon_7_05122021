@@ -7,11 +7,14 @@
                 <router-link to="/">Connexion</router-link> |
                 <router-link to="/register">Inscription</router-link>
           </div>
-          <div id="nav" v-else>
-          <span v-if="userImage"><img :src="userImage" width="30px"/></span>Vous êtes connectés en tant que : {{ userPseudo}}
-          <p><button @click="disconnect">Se déconnecter</button></p>
-          </div>
-        <router-view/>
+              <div id="nav"  v-else>
+                  <div class="messageForm">
+                    <span v-if="userImage"><img :src="userImage" id="avatar" width="60px"/></span><p id="userName">{{userPseudo.substr(0,1).toUpperCase()+ userPseudo.slice(1)}}</p>
+                    <p><button @click="disconnect" id="buttonDeconnect" >Se déconnecter</button></p>
+                  </div>
+                   
+              </div>
+               <router-view/>
     </div>
     <div>footer</div>
   </div>
@@ -73,10 +76,8 @@ body{
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   padding: 15px;
-
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -97,19 +98,37 @@ body{
   height:130px;
   margin-top:-30px;
 }
-
 #mainDiv {
-
   border: 3px solid rgb(14, 104, 146);
-  width: 40%;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 3%;
   background-color: rgb(218, 232, 238);
   display: flex;
   flex-direction: column;
-  align-items: center;
-
 }
-
+.messageForm{
+  border: 2px solid rgb(14, 104, 146);
+  border-radius: 30px;
+  margin-left:0px;
+  width:20%;
+  display:flex;
+  flex-direction:column;
+}
+#avatar{
+  margin-top: 7px;
+  border-radius: 90px;
+}
+#userName{
+  font-weight: bold;
+}
+#buttonDeconnect{
+  border-radius: 45px;
+  padding: 7px;
+  background:rgb(14, 104, 146);
+  color: white;
+  width: 60%;
+  font-size: 14px;
+}
 </style>

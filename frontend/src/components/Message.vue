@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="listOfCommentsMain">
         <div>
             <p>{{message.content}}</p>
             <p v-if="message.imageUrl"><img :src="message.imageUrl" width="100px"/></p>
@@ -183,4 +183,6 @@
     }
 </script>
 
-<style></style>
+<style>
+
+</style>

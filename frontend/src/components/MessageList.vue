@@ -1,9 +1,8 @@
 <template>
-<div>
-    <div>
-    <p>Ajouter un post</p>
-    <form v-on:submit.prevent="checkForm" enctype="multipart/form-data">
-    <p v-if="errors.length">
+<div >
+    <div id="mtest">
+        <form v-on:submit.prevent="checkForm" enctype="multipart/form-data">
+        <p v-if="errors.length">
             <b>Merci de corriger les erreurs suivantes:</b>
             <ul>
             <li v-for="error in errors" :key="error">{{ error }}</li>
@@ -11,25 +10,44 @@
             </p>
             <p v-if="success !== ''">{{ success}}</p>
         <div class="form-group">
-            <label>Contenu</label>
-            <textarea name="content" class="form-control form-control-lg"  v-model="content" placeholder="Contenu"></textarea>
-            <input type="file" name="imagePost" @change="handleFileUpload( $event )" ref="inputImage" accept="image/x-png,image/gif,image/jpeg" />
+            <textarea name="content" class="form-control form-control-lg"  v-model="content" placeholder="Taper votre message ici"></textarea>
+            
         </div>
-            <button type="submit" class="btn btn-dark btn-lg btn-block">Ajouter</button>
-    </form>
+            <input type="file" name="imagePost" @change="handleFileUpload( $event )" ref="inputImage" accept="image/x-png,image/gif,image/jpeg" id="postImg" />
+            <button type="submit" class="postButton" >Ajouter</button>
+        </form>
     </div>
     
     <div v-for="message in messages" :key="message.postId">
         <Message v-bind:message="message" />        
         <hr />
     </div>
-
+  
 </div>
 </template>
 
 
 <style lang="scss">
-
+#mtest{
+    width: 65%;
+    margin-top: -15%;
+    margin-left: 30%;
+}
+.form-control-lg{
+    font-size: 14px;
+    height: 130px;
+}
+#postImg{
+   font-size: 14px;
+}
+.postButton{
+  border-radius: 45px;
+  padding: 7px;
+  background:rgb(14, 104, 146);
+  color: white;
+  width: 15%;
+  font-size: 14px;
+}
 </style>
  
 <script>
