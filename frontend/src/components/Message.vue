@@ -1,21 +1,26 @@
 <template>
     <div id="listOfCommentsMain">
-        <div>
-            <p>{{message.content}}</p>
-            <p v-if="message.imageUrl"><img :src="message.imageUrl" width="100px"/></p>
-            <p>Ecrit :{{ message.date | moment("from") }}</p>
-            <p>Par : <span v-if="message.userImageUrl"><img :src="message.userImageUrl" width="30px"/></span> {{message.pseudo}}</p>
-            <p>Nb likes : {{nbLikes}} </p>
-            <button v-if="statutLike == 0" @click="addLike">Ajouter like</button>
-            <button  v-else  @click="removeLike">Retirer like</button>
+        <div id="userPostedLogo">
+            <span v-if="message.userImageUrl"><img :src="message.userImageUrl" width="30px" id="postAvatar"/></span> {{message.pseudo.substr(0,1).toUpperCase()+ message.pseudo.slice(1)}} 
+        
         </div>
-        <div>Commentaires
-            <div v-for="comment in comments"  :key="comment.commentId">
-                <p>{{comment.message}}  </p>
-                <p>Par : <span v-if="comment.userImageUrl"><img :src="comment.userImageUrl" width="30px"/></span> {{comment.pseudo}}  </p>
-                <p>Ecrit :{{ comment.date | moment("from") }}</p>
+        <div id="messagePosted">    
+            <p id="messageTime">Ecrit : {{ message.date | moment("from") }}</p>
+            <p id="messageText">{{message.content}}</p>
+            <p id="messageImg" v-if="message.imageUrl"><img :src="message.imageUrl" width="150px"/></p>
+           
+            <div id="likesDiv">
+                <p id="nblikes"><i class="far fa-thumbs-up"></i>: {{nbLikes}} </p>
+                <button v-if="statutLike == 0" @click="addLike" class="appreciateButton"><i class="far fa-thumbs-up"></i></button>
+                <button  v-else  @click="removeLike" class="appreciateButton"><i class="far fa-thumbs-down"></i></button>
             </div>
-            <div>Ajouter un commentaire
+            <div v-for="comment in comments"  :key="comment.commentId" id="commentMessage">
+                <p><span v-if="comment.userImageUrl"><img :src="comment.userImageUrl" width="30px"/></span> {{comment.pseudo.substr(0,1).toUpperCase()+ comment.pseudo.slice(1)}} a répondu: </p>
+                <p id="commentText">{{comment.message}}  </p>
+                
+                <p id="commentDate">Ecrit :{{ comment.date | moment("from") }}</p>
+            </div>
+            <div>
             <form  v-on:submit.prevent="checkForm">
                 <p v-if="errors.length">
                     <b>Merci de corriger les erreurs suivantes:</b>
@@ -23,11 +28,11 @@
                     <li v-for="error in errors" :key="error">{{ error }}</li>
                     </ul>
                 </p>
-                <textarea name="contentComment" rows="1" class="form-control form-control-lg"  v-model="contentComment" placeholder="Contenu"></textarea>
-                <button type="submit" class="btn btn-dark btn-lg btn-block">Ajouter</button>
+                 <textarea name="contentComment" rows="1" class="form-control form-control-lg commentaireForm"  v-model="contentComment" placeholder="Commentaire"></textarea>
+                <button type="submit" class="commentButton" ><i class="far fa-comment"></i></button>
             </form>
             </div>
-        </div>
+        </div> 
     </div>
 </template>
 
@@ -184,5 +189,95 @@
 </script>
 
 <style>
+#listOfCommentsMain{
+    border:2px solid rgb(14, 104, 146);
+    width:95%;
+    border-radius: 15px;
+    margin-right:auto;
+    margin-left:auto;
+    margin-top:15px;
+    display:flex;
+    flex-direction: row;
+    margin-bottom:5px;
+}
+#userPostedLogo{
+    display:flex;
+    flex-direction: column;
+    width:20%;
+}
+#postAvatar{
+    width:45px;
+    border-radius:90px;
+    margin-top: 20px;
+}
+#messagePosted{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+#messageTime{
+    width:100%;
+    font-size:12px;
+    text-align:left;
+}
+#messageText{
+    font-size:15px;
+    word-wrap:break-word;
+    text-align:left;
+    font-weight:bold;
+}
+#messageImg{
+ text-align:left;
+}
+#likesDiv{
+    display:flex;
+    flex-direction:row;
+    width:90%;
+    justify-content: left;
+    margin-bottom:10px;
 
+}
+.appreciateButton{
+    width: 75px;
+    height:35px;
+    background-color:rgb(14, 104, 146);
+    border-radius: 30px;
+    color:white;
+    margin-left:15px;
+}
+#nblikes{
+    margin-top:5px;
+}
+.commentaireForm{
+    font-size:13px;
+    height: 30px!important;
+    width:60%;
+    margin-left:20%;
+}
+.commentButton{
+    background-color:rgb(14, 104, 146);
+    border-radius: 20px;
+    color:white;
+    width:  55px;
+    font-size:14px;
+    margin-top:5px;
+    margin-bottom: 5px;
+    margin-left:54%;
+}
+#commentMessage{
+    width: 60%;
+    text-align:left;
+    margin-left:20%;
+    border:1px solid rgb(14, 104, 146);
+    border-radius:15px;
+    margin-bottom:5px;
+    word-wrap:break-word;
+}
+#commentText{
+    font-weight:bold;
+}
+#commentDate{
+    font-size:11px;
+}
 </style>

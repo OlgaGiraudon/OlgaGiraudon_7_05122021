@@ -7,10 +7,11 @@
                 <router-link to="/">Connexion</router-link> |
                 <router-link to="/register">Inscription</router-link>
           </div>
-              <div id="nav"  v-else>
+              <div id="nav" v-else>
                   <div class="messageForm">
                     <span v-if="userImage"><img :src="userImage" id="avatar" width="60px"/></span><p id="userName">{{userPseudo.substr(0,1).toUpperCase()+ userPseudo.slice(1)}}</p>
                     <p><button @click="disconnect" id="buttonDeconnect" >Se déconnecter</button></p>
+                    <p><button @click="disconnect" id="buttonDeconnectHide"><i class="fas fa-sign-out-alt"></i></button></p>
                   </div>
                    
               </div>
@@ -77,7 +78,14 @@ body{
   color: #2c3e50;
 }
 #nav {
-  padding: 15px;
+  padding-top: 15px;
+  padding-bottom:15px;
+  width:95%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -108,13 +116,19 @@ body{
   display: flex;
   flex-direction: column;
 }
+
 .messageForm{
   border: 2px solid rgb(14, 104, 146);
   border-radius: 30px;
   margin-left:0px;
+  margin-top: 0px;
   width:20%;
   display:flex;
   flex-direction:column;
+   @media screen and (max-width: 550px){
+     border: none;
+     flex-direction:row;
+  }
 }
 #avatar{
   margin-top: 7px;
@@ -130,5 +144,57 @@ body{
   color: white;
   width: 60%;
   font-size: 14px;
+  @media screen and (max-width: 1153px){
+   font-size: 11px;
+  }
+  
+  @media screen and (max-width: 940px){
+     width: 80%;
+  }
+  @media screen and (max-width: 721px){
+     display:none;
+  } 
+  @media screen and (max-width: 550px){
+    display:inline;
+    width: 110px;
+    margin-left: 150%;
+    }
+    @media screen and (max-width: 470px){
+    margin-left: 100%;
+    }
+    @media screen and (max-width: 435px){
+    margin-left: 80%;
+    }
+     @media screen and (max-width: 360px){
+    margin-left: 60%;
+    width: 100px;
+    font-size: 10px;
+    }
+  @media screen and (max-width: 315px){
+       margin-left: 50%;
+    }
+     @media screen and (max-width: 283px){
+       margin-left: 30%;
+      width:80px;
+      font-size: 8px;
+    }
+     @media screen and (max-width: 300px){
+       margin-left: 30%;
+    }
 }
+#buttonDeconnectHide{
+  display:none;
+  @media screen and (max-width: 721px){
+    display:block;
+    background:rgb(14, 104, 146);
+    color: white;
+    width: 60%;
+    border-radius: 90px;
+    margin-left:auto;
+    margin-right: auto;
+    }
+    @media screen and (max-width: 550px){
+    display:none;
+    }
+  }
 </style>
