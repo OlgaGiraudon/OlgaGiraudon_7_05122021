@@ -1,11 +1,14 @@
 <template>
   <div id="app">
-    <div id= "header"><img :src="require('./logo/icon.png')" alt="logo_Groupomania"/></div>
-    <p>Pour vous et avec vous</p>
+    <div id= "header"><img :src="require('./logo/icon.png')" alt="logo_Groupomania" id="logoImg"/></div>
+    <p id="sloganTexte">Pour vous et avec vous</p>
     <div id= "mainDiv">
+          <div>
           <div id="nav" v-if="userPseudo == ''">
+                <div id="connectInscrTexte">
                 <router-link to="/">Connexion</router-link> |
                 <router-link to="/register">Inscription</router-link>
+                </div>
           </div>
               <div id="nav" v-else>
                   <div class="messageForm">
@@ -16,8 +19,9 @@
                    
               </div>
                <router-view/>
+               </div>
     </div>
-    <div>footer</div>
+    
   </div>
 </template>
 <script>
@@ -101,10 +105,15 @@ body{
   width: 100%;
   height: 65px;
 }
-#header img{
+#logoImg{
   
-  height:130px;
-  margin-top:-30px;
+  height:200px;
+  margin-top:-70px;
+}
+#sloganTexte{
+  font-size: 25px;
+  font-family: 'Corinthia', cursive;
+  font-weight: bold;
 }
 #mainDiv {
   border: 3px solid rgb(14, 104, 146);
@@ -129,6 +138,10 @@ body{
      border: none;
      flex-direction:row;
   }
+}
+#connectInscrTexte{
+  margin-left:auto;
+  margin-right:auto;
 }
 #avatar{
   margin-top: 7px;
@@ -197,4 +210,5 @@ body{
     display:none;
     }
   }
+  
 </style>

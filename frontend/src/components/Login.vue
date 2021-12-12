@@ -2,14 +2,14 @@
     <div class="login_div">
         <form v-on:submit.prevent="checkForm">
             <h3>Se connecter</h3>
-
+        <div id="errorMessage">
             <p v-if="errors.length">
             <b>Merci de corriger les erreurs suivantes:</b>
             <ul>
             <li v-for="error in errors" :key="error">{{ error }}</li>
             </ul>
             </p>
- 
+         </div>
             <div class="form-group">
                 <label>Email</label>
                 <input type="text" class="form-control form-control-lg" v-model="email"  placeholder="Email" />
@@ -20,7 +20,7 @@
                 <input type="password" class="form-control form-control-lg" v-model="password" placeholder="Mot de passe" />
             </div>
  
-            <button type="submit" class="btn btn-dark btn-lg btn-block">Connexion</button>
+            <button type="submit">Connexion</button>
  
         </form>
     </div>
@@ -85,16 +85,31 @@
 <style lang="scss">
 .login_div {
     width:40%;
-    text-align: center;
-    
+    margin-left:auto;
+    margin-right: auto;
+    @media screen and(max-width:810px){
+         width:70%;
+    }
+     @media screen and(max-width:410px){
+         width:90%;
+    }
 }
 h3 {
     font-size: 23px;
     border: 1px solid #3e82aa;
+ 
 }
 label, input, button {
     margin-bottom: 10px;
     margin-top: 5px;
+}
+button{
+    background-color: rgb(14, 104, 146);
+    color: white;
+    border-radius:20px;
+    width: 30%;
+    min-width:100px;
+    height: 40px;
 }
 
 </style>

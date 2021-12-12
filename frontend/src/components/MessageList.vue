@@ -2,13 +2,17 @@
 <div>
     <div id="messageForm">
         <form v-on:submit.prevent="checkForm" enctype="multipart/form-data">
+     <div id="errorMessage">
         <p v-if="errors.length">
             <b>Merci de corriger les erreurs suivantes:</b>
             <ul>
             <li v-for="error in errors" :key="error">{{ error }}</li>
             </ul>
             </p>
+        </div>
+        <div class="succesMessage">
             <p v-if="success !== ''">{{ success}}</p>
+        </div>
         <div class="form-group">
             <textarea name="content" class="form-control form-control-lg"  v-model="content" placeholder="Taper votre message ici"></textarea>
             
@@ -33,10 +37,10 @@
 
 #messageForm{
     width: 68%;
-    margin-top: -197px;
+    margin-top: -170px;
     margin-left: 25%;
      @media screen and (max-width: 900px){
-      margin-top: -180px;
+      margin-top: -170px;
   }
    @media screen and (max-width: 550px){
       margin-top: 0px;
@@ -77,6 +81,20 @@
      @media screen and (max-width:550px){
       flex-direction: column;
   }
+}
+#errorMessage{
+    background-color:rgb(236, 142, 142);
+    border-radius:20px;
+    text-align:left;
+}
+#errorMessage p{
+   margin-left:15px;
+   padding-top:10px;
+   padding-bottom:5px;
+}
+.succesMessage{
+    background-color:rgb(105, 223, 160);
+    border-radius:20px;
 }
 </style>
  

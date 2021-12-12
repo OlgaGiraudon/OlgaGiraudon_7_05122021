@@ -22,12 +22,14 @@
             </div>
             <div>
             <form  v-on:submit.prevent="checkForm">
+            <div id="errorComment">
                 <p v-if="errors.length">
                     <b>Merci de corriger les erreurs suivantes:</b>
                     <ul>
                     <li v-for="error in errors" :key="error">{{ error }}</li>
                     </ul>
                 </p>
+            </div>
                  <textarea name="contentComment" rows="1" class="form-control form-control-lg commentaireForm"  v-model="contentComment" placeholder="Commentaire"></textarea>
                 <button type="submit" class="commentButton" ><i class="far fa-comment"></i></button>
             </form>
@@ -279,5 +281,13 @@
 }
 #commentDate{
     font-size:11px;
+}
+#errorComment{
+    background-color:rgb(236, 142, 142);
+    border-radius:20px;
+    width:60%;
+    margin-left:20%;
+    text-align:left;
+    padding-left:15px;
 }
 </style>
