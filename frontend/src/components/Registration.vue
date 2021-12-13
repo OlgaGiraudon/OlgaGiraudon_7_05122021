@@ -129,10 +129,10 @@ input{
             },
             validEmail: function (email) {
                 var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return re.test(email);
+                return re.test(email);//verif Regexp
             },
             handleFileUpload( event ){
-                this.file = event.target.files[0];
+                this.file = event.target.files[0];//{name: "....jpg", lastModified: ..., webkitRelativePath: "", size:...., type: "image/jpeg"}
             },
 
             register() {
@@ -145,7 +145,6 @@ input{
                 formData.append('pseudo', this.pseudo);
                 formData.append('email', this.email);
                 formData.append('password', this.password);
-
                 http.post('/auth/signup', formData)
                     .then(response => {  
                         this.success = response.data.message;

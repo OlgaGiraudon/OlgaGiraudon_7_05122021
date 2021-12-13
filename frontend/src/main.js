@@ -1,3 +1,4 @@
+//Vue initialization Инициализация Vue
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -7,5 +8,5 @@ Vue.use(require('vue-moment'));
 
 new Vue({
   router,
-  render: h => h(App)
+  render: h => h(App)//Подключение файла App к диву app
 }).$mount('#app')

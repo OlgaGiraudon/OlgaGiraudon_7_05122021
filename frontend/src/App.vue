@@ -1,13 +1,14 @@
 <template>
   <div id="app">
-    <div id= "header"><img :src="require('./logo/icon.png')" alt="logo_Groupomania" id="logoImg"/></div>
+  <!-- require соответствует v-bind-->
+    <div id= "header"><img :src="require('./logo/icon.png')" alt="logo_Groupomania" id="logoImg"/></div> 
     <p id="sloganTexte">Pour vous et avec vous</p>
     <div id= "mainDiv">
           <div>
           <div id="nav" v-if="userPseudo == ''">
                 <div id="connectInscrTexte">
-                <router-link to="/">Connexion</router-link> |
-                <router-link to="/register">Inscription</router-link>
+                    <router-link to="/">Connexion</router-link> |
+                    <router-link to="/register">Inscription</router-link>
                 </div>
           </div>
               <div id="nav" v-else>
@@ -40,9 +41,10 @@
         this.userPseudo = '';
         if(userConnected) {
           let user = JSON.parse(userConnected);
+          
            let formDatas = {"userId": user.userId, "pseudo": user.pseudo }
-
-                http.post('/auth/checkValidUser', JSON.stringify(formDatas))
+              
+                http.post('/auth/checkValidUser', JSON.stringify(formDatas))  //back-end: user / exports.checkValidUser
                 .then(() => {
                         this.userPseudo = user.pseudo;
                         this.userImage = user.userImage
@@ -60,7 +62,7 @@
       disconnect() {
         localStorage.removeItem('user');
         this.userPseudo = '';
-        window.location.href="/";
+        window.location.href="/"; //../components/Login.vue
       }
     },
     mounted: function() {
