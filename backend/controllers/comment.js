@@ -3,6 +3,7 @@ const db = require("../db");
 exports.add = (req, res, next) => {
     var sql = "INSERT INTO comments (postId, userId, message, date) VALUES (?, ?, ?, NOW())";
     
+
     db.query(sql, [req.body.postId, req.body.userId, req.body.message], function (err, result) {
         if(err) {
             res.status(500).json({ error: err });

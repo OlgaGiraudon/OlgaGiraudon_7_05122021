@@ -53,7 +53,7 @@
                     return true;
                 }
 
-                e.preventDefault();
+                e.preventDefault(); //отменяет событие submit
             },
             login() {
                 this.success = '';

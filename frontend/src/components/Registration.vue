@@ -133,6 +133,7 @@ input{
             },
             handleFileUpload( event ){
                 this.file = event.target.files[0];//{name: "....jpg", lastModified: ..., webkitRelativePath: "", size:...., type: "image/jpeg"}
+                
             },
 
             register() {
@@ -140,7 +141,7 @@ input{
 
                 const formData = new FormData();
                 if(this.file) {
-                    formData.append('imagePost', this.file, this.file.filename);
+                    formData.append('imagePost', this.file, this.file.name);
                 }
                 formData.append('pseudo', this.pseudo);
                 formData.append('email', this.email);
