@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `commentId` int NOT NULL AUTO_INCREMENT,
   `postId` int NOT NULL,
   `userId` int NOT NULL,
-  `message` varchar(1000) NOT NULL,
+  `message` varchar(500) NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`commentId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `pseudo` varchar(255) NOT NULL,
-  `userImageUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `userImageUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`userId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 COMMIT;
