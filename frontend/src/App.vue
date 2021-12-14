@@ -14,6 +14,7 @@
               <div id="nav" v-else>
                   <div class="messageForm">
                     <span v-if="userImage"><img :src="userImage" id="avatar" width="60px"/></span><p id="userName">{{userPseudo.substr(0,1).toUpperCase()+ userPseudo.slice(1)}}</p>
+                    <p><button @click="deleteUser">Supprimer mon compte</button></p>
                     <p><button @click="disconnect" id="buttonDeconnect" >Se déconnecter</button></p>
                     <p><button @click="disconnect" id="buttonDeconnectHide"><i class="fas fa-sign-out-alt"></i></button></p>
                   </div>
@@ -63,6 +64,38 @@
         localStorage.removeItem('user');
         this.userPseudo = '';
         window.location.href="/"; //../components/Login.vue
+      },
+      deleteUser() {
+        if(confirm("Voulez-vous vraiment supprimer votre compte ?")){
+          let userConnected = localStorage.getItem('user');
+          this.userPseudo = '';
+          if(userConnected) {
+            let user = JSON.parse(userConnected);
+            
+            let formDatas = {"userId": user.userId }
+                
+                  http.post('/auth/deleteUser', JSON.stringify(formDatas),
+                  {
+                    headers: {
+                    'Authorization': `bearer ${user.token}`}
+                  }
+                  )  
+                  .then(() => {
+                        localStorage.removeItem('user');
+                        this.userPseudo = '';
+                        this.userImage = '';
+                        window.location.href="/";
+                        }
+                  )
+                  .catch( () => {
+                    
+                      localStorage.removeItem('user');
+                      this.userPseudo = '';
+                      window.location.href="/";
+                      }
+                  );
+          }
+        }
       }
     },
     mounted: function() {

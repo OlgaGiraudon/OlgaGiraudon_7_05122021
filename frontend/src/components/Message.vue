@@ -56,6 +56,7 @@
         },
         props: ['message'],
         methods: {
+            //likes
             async retrieveLikes() {
                 http.get('/like/nbLikePost',
                     {
@@ -147,7 +148,7 @@
                 }
                 e.preventDefault();
             },
-
+//Post comments
             async addMessage() {
                 this.success = '';
                 this.errors = '';

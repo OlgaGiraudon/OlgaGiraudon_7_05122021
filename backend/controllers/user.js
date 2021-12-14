@@ -26,7 +26,7 @@ exports.signup = (req, res, next) => {
           .then(hash => {
             var sql = "INSERT INTO user (email, password, pseudo, userImageUrl) VALUES (?, ?, ?, ?)";
             if(req.file) {
-              imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+              imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.name}`;
             }
             db.query(sql, [req.body.email, hash, req.body.pseudo, imageUrl], function (err, result) {
               if(err) {
@@ -98,3 +98,38 @@ exports.signup = (req, res, next) => {
         }   
       })
     };
+
+    exports.deleteUser = (req, res, next) => {
+      var sql = "DELETE FROM comments WHERE userId = ?"
+      db.query(sql, [req.body.userId], function (err, result) {
+        if(err) {
+            res.status(500).json({ error: err });
+            throw err;
+        }
+      });
+        var sql = "DELETE FROM likes WHERE userId = ?"
+        db.query(sql, [req.body.userId], function (err, result) {
+          if(err) {
+            res.status(500).json({ error: err });
+            throw err;
+          }          
+        }); 
+        
+        var sql = "DELETE FROM post WHERE userId = ?"
+        db.query(sql, [req.body.userId], function (err, result) {
+          if(err) {
+            res.status(500).json({ error: err });
+            throw err;
+          }
+        });
+
+        var sql = "DELETE FROM user WHERE userId = ?"
+        db.query(sql, [req.body.userId], function (err, result) {
+          if(err) {
+            res.status(500).json({ error: err });
+            throw err;
+          }
+        });
+        return res.status(200).json({ message: 'User supprimé !' });    
+    
+    }

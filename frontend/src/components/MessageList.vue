@@ -139,7 +139,7 @@
         
         checkForm: function (e) {
                 this.success = '';
-                this.errors = [];                
+                this.errors = [];
                 if (!this.content) {
                     this.errors.push('Contenu requis.');
                 }
@@ -150,7 +150,7 @@
                 }
                 e.preventDefault();
             },
-
+//Post message
         async addMessage() {
             this.success = '';
             this.errors = '';

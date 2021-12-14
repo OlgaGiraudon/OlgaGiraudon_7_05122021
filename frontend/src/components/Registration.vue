@@ -133,7 +133,7 @@ input{
             },
             handleFileUpload( event ){
                 this.file = event.target.files[0];//{name: "....jpg", lastModified: ..., webkitRelativePath: "", size:...., type: "image/jpeg"}
-                
+
             },
 
             register() {
@@ -147,17 +147,18 @@ input{
                 formData.append('email', this.email);
                 formData.append('password', this.password);
                 http.post('/auth/signup', formData)
-                    .then(response => {  
+                    .then(response => {
                         this.success = response.data.message;
                         this.$refs.inputImage.value=null;
                         this.file = '';
                 })
-                .catch(e => { 
+                
+                .catch(e => {
                     if(e.response) {
-                        this.errors.push(e.response.data.error); 
+                        this.errors.push(e.response.data.error);
                     }
                 });
-
+                
             }
         },
         mounted: function() {
