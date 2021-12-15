@@ -141,7 +141,7 @@ input{
 
                 const formData = new FormData();
                 if(this.file) {
-                    formData.append('imagePost', this.file, this.file.name);
+                    formData.append('imagePost', this.file, this.file.filename);
                 }
                 formData.append('pseudo', this.pseudo);
                 formData.append('email', this.email);

@@ -26,7 +26,7 @@ exports.signup = (req, res, next) => {
           .then(hash => {
             var sql = "INSERT INTO user (email, password, pseudo, userImageUrl) VALUES (?, ?, ?, ?)";
             if(req.file) {
-              imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.name}`;
+              imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
             }
             db.query(sql, [req.body.email, hash, req.body.pseudo, imageUrl], function (err, result) {
               if(err) {
