@@ -37,12 +37,10 @@
 
 #messageForm{
     width: 68%;
-    margin-top: -210px;
+    margin-top: -200px;
     margin-left: 25%;
-     @media screen and (max-width: 900px){
-      margin-top: -215px;
-  }
-   @media screen and (max-width: 550px){
+     
+   @media screen and (max-width: 600px){
       margin-top: 0px;
       width: 90%;
       margin-left:auto;

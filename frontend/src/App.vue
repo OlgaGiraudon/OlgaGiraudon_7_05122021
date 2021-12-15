@@ -13,14 +13,22 @@
           </div>
               <div id="nav" v-else>
                   <div class="messageForm">
-                    <span v-if="userImage"><img :src="userImage" id="avatar" width="60px"/></span><p id="userName">{{userPseudo.substr(0,1).toUpperCase()+ userPseudo.slice(1)}}</p>
-                    <p><button @click="deleteUser">Supprimer mon compte</button></p>
-                    <p><button @click="disconnect" id="buttonDeconnect" >Se déconnecter</button></p>
-                    <p><button @click="disconnect" id="buttonDeconnectHide"><i class="fas fa-sign-out-alt"></i></button></p>
+                    <div id="divAvatar_deleteButton">
+                        <button @click="deleteUser" id="buttonDeleteUser" data-tooltip="Supprimer mon compte" aria-label="buttonDeleteUser"><i class="fas fa-trash-alt"></i></button>
+                        <span v-if="userImage" id="spanLogo"><img :src="userImage" id="avatar" alt= "Avatar" width="60px"/>
+                        <p id="userName">{{userPseudo.substr(0,1).toUpperCase()+ userPseudo.slice(1)}}</p></span>
+                    </div>
+                    <div id="divButtonDeconnect">
+                        <button @click="disconnect" id="buttonDeconnect" aria-label="buttonDeconnect">Se déconnecter</button>
+                        <button @click="disconnect" id="buttonDeconnectHide" aria-label="buttonDeconnectVersionImage"><i class="fas fa-sign-out-alt"></i></button>
+                         
+                    </div>
                   </div>
                    
               </div>
+              
                <router-view/>
+               
                </div>
     </div>
     
@@ -125,6 +133,7 @@ body{
   display: flex;
   flex-direction: row;
   justify-content: left;
+  
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -139,11 +148,13 @@ body{
   border: 3px solid rgb(14, 104, 146);
   width: 100%;
   height: 65px;
+ 
 }
 #logoImg{
   
   height:200px;
   margin-top:-70px;
+  
 }
 #sloganTexte{
   font-size: 25px;
@@ -169,21 +180,47 @@ body{
   width:20%;
   display:flex;
   flex-direction:column;
-   @media screen and (max-width: 550px){
-     border: none;
-     flex-direction:row;
+  @media screen and (max-width:600px){
+    width:90%;
+    margin-right:auto;
+    margin-left:auto;
   }
 }
-#connectInscrTexte{
+#divAvatar_deleteButton {
+ width:95%;
+ @media screen and (max-width: 600px){
+   width:100%;
+   display:flex;
+   flex-direction:row;
+   justify-content: left;
+   
+ }
+}
+#divButtonDeconnect {
+  width:95%;
+}
+#spanLogo{
+   @media screen and (max-width: 600px){
+   margin-left: auto;
+   margin-right: auto;
+   
+ }
+}
+#connectInscrTexte {
   margin-left:auto;
   margin-right:auto;
 }
 #avatar{
   margin-top: 7px;
   border-radius: 90px;
+  @media screen and (max-width:600px){
+    width:80px;
+  }
+    
 }
 #userName{
   font-weight: bold;
+  
 }
 #buttonDeconnect{
   border-radius: 45px;
@@ -192,58 +229,102 @@ body{
   color: white;
   width: 60%;
   font-size: 14px;
-  @media screen and (max-width: 1153px){
-   font-size: 11px;
-  }
-  
-  @media screen and (max-width: 940px){
+  margin-bottom:7px;
+  margin-right:auto;
+  margin-left:auto;
+   @media screen and (max-width: 1240px){
+     width: 70%;
+   }
+   @media screen and (max-width: 1067px){
+     width: 75%;
+   }
+   @media screen and (max-width: 998px){
      width: 80%;
-  }
-  @media screen and (max-width: 721px){
+     font-size: 13px;
+   }
+   @media screen and (max-width: 870px){
+      padding:4px;
+       width: 85%;
+      font-size: 12px;
+      }
+   @media screen and (max-width: 800px){
      display:none;
-  } 
-  @media screen and (max-width: 550px){
-    display:inline;
-    width: 110px;
-    margin-left: 150%;
-    }
-    @media screen and (max-width: 470px){
-    margin-left: 100%;
-    }
-    @media screen and (max-width: 435px){
-    margin-left: 80%;
-    }
-     @media screen and (max-width: 360px){
-    margin-left: 60%;
-    width: 100px;
-    font-size: 10px;
-    }
-  @media screen and (max-width: 315px){
-       margin-left: 50%;
-    }
-     @media screen and (max-width: 283px){
-       margin-left: 30%;
-      width:80px;
-      font-size: 8px;
-    }
-     @media screen and (max-width: 300px){
-       margin-left: 30%;
-    }
+      }
 }
 #buttonDeconnectHide{
   display:none;
-  @media screen and (max-width: 721px){
-    display:block;
-    background:rgb(14, 104, 146);
-    color: white;
-    width: 60%;
-    border-radius: 90px;
-    margin-left:auto;
-    margin-right: auto;
-    }
-    @media screen and (max-width: 550px){
-    display:none;
-    }
-  }
   
+  @media screen and (max-width: 800px){
+     display:block;
+      border-radius: 45px;
+      padding: 4px;
+      background:rgb(14, 104, 146);
+      color: white;
+      width: 45%;
+      margin-bottom:7px;
+      margin-right:auto;
+      margin-left:auto;
+      }
+      @media screen and (max-width: 600px){
+      width: 60px;
+      margin-left:1%;
+      height:40px;
+      }
+  }
+
+#buttonDeleteUser{
+    background-color: #610B21;
+    color:white;
+    width: 50px;
+    border-radius: 15px;
+    margin-left:75%;
+    margin-top:7px;
+      @media screen and (max-width: 1073px){
+      margin-left:70%;
+      }
+      @media screen and (max-width: 970px){
+      margin-left:65%;
+      }
+      @media screen and (max-width: 870px){
+      margin-left:60%;
+      }
+      @media screen and (max-width: 760px){
+      margin-left:50%;
+      width: 45px;
+      }
+      @media screen and (max-width:600px){
+      margin-left:1%;
+      height:40px;
+      width: 60px;
+      }
+      
+  }
+
+  
+  [data-tooltip]::after {
+    content: attr(data-tooltip); /* Texte */
+    position: absolute; 
+    width: 200px; 
+    left: 300px; top: 200px; 
+    background: #3989c9; 
+    color: #fff; 
+    padding: 0.5em; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+    pointer-events: none; /* texte */
+    opacity: 0; 
+    transition: 1s; 
+    border-radius:15px;
+    @media screen and (max-width:600px){
+      display:none;
+     
+      }
+   } 
+   [data-tooltip]:hover::after {/* Show tooltop */
+    opacity: 1; 
+    top: 200px; 
+    @media screen and (max-width:600px){
+      display:none;
+     
+      }
+   }
 </style>
