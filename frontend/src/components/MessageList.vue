@@ -19,7 +19,7 @@
         </div>
          <div id="buttonsForm"> 
             <input type="file" name="imagePost" @change="handleFileUpload( $event )" ref="inputImage" accept="image/x-png,image/gif,image/jpeg" id="postImg" />
-            <button type="submit" class="postButton" >Ajouter</button>
+            <button type="submit" class="postButton" aria-label="AjouterMessage">Ajouter</button>
         </div>
         </form>
     </div>
@@ -37,16 +37,17 @@
 
 #messageForm{
     width: 68%;
-    margin-top: -170px;
+    margin-top: -210px;
     margin-left: 25%;
      @media screen and (max-width: 900px){
-      margin-top: -170px;
+      margin-top: -215px;
   }
    @media screen and (max-width: 550px){
       margin-top: 0px;
       width: 90%;
       margin-left:auto;
       margin-right:auto;
+     
   }
 }
 .form-control-lg{

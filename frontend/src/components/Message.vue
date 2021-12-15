@@ -1,21 +1,21 @@
 <template>
     <div id="listOfCommentsMain">
         <div id="userPostedLogo">
-            <span v-if="message.userImageUrl"><img :src="message.userImageUrl" width="30px" id="postAvatar"/></span> {{message.pseudo.substr(0,1).toUpperCase()+ message.pseudo.slice(1)}} 
+            <span v-if="message.userImageUrl"><img :src="message.userImageUrl" width="50px" id="postAvatar" alt="avatarUserCommented"/></span> {{message.pseudo.substr(0,1).toUpperCase()+ message.pseudo.slice(1)}} 
         
         </div>
         <div id="messagePosted">    
             <p id="messageTime">Ecrit : {{ message.date | moment("from") }}</p>
             <p id="messageText">{{message.content}}</p>
-            <p id="messageImg" v-if="message.imageUrl"><img :src="message.imageUrl" width="150px"/></p>
+            <p id="messageImg" v-if="message.imageUrl"><img :src="message.imageUrl" alt="imageMessage" width="150px"/></p>
            
             <div id="likesDiv">
                 <p id="nblikes"><i class="far fa-thumbs-up"></i>: {{nbLikes}} </p>
-                <button v-if="statutLike == 0" @click="addLike" class="appreciateButton"><i class="far fa-thumbs-up"></i></button>
-                <button  v-else  @click="removeLike" class="appreciateButton"><i class="far fa-thumbs-down"></i></button>
+                <button v-if="statutLike == 0" @click="addLike" class="appreciateButton" aria-label="buttonMettreLike"><i class="far fa-thumbs-up"></i></button>
+                <button  v-else  @click="removeLike" class="appreciateButton" aria-label="buttonSupprimerLike"><i class="far fa-thumbs-down"></i></button>
             </div>
             <div v-for="comment in comments"  :key="comment.commentId" id="commentMessage">
-                <p><span v-if="comment.userImageUrl"><img :src="comment.userImageUrl" width="30px"/></span> {{comment.pseudo.substr(0,1).toUpperCase()+ comment.pseudo.slice(1)}} a répondu: </p>
+                <p><span v-if="comment.userImageUrl"><img :src="comment.userImageUrl" alt="avatarUserCommented" width="30px"/></span> {{comment.pseudo.substr(0,1).toUpperCase()+ comment.pseudo.slice(1)}} a répondu: </p>
                 <p id="commentText">{{comment.message}}  </p>
                 
                 <p id="commentDate">Ecrit :{{ comment.date | moment("from") }}</p>
@@ -31,7 +31,7 @@
                 </p>
             </div>
                  <textarea name="contentComment" rows="1" class="form-control form-control-lg commentaireForm"  v-model="contentComment" placeholder="Commentaire"></textarea>
-                <button type="submit" class="commentButton" ><i class="far fa-comment"></i></button>
+                <button type="submit" class="commentButton" aria-label="AjouterCommentaire"><i class="far fa-comment"></i></button>
             </form>
             </div>
         </div> 
@@ -209,7 +209,7 @@
     width:20%;
 }
 #postAvatar{
-    width:45px;
+    width:60px;
     border-radius:90px;
     margin-top: 20px;
 }
